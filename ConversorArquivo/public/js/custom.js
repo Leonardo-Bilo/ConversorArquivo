@@ -42,19 +42,19 @@ if (document.readyState === "complete" || document.readyState !== "loading" && !
             textClass='text-light bg-danger'; 
             logMsg=`${logMsg}`;
           } else if(logMsg.indexOf('[fferr] size= ')===0 || logMsg.indexOf('[fferr] frame= ')===0) {
-            textClass='text-white bg-primary'; // impt. action n eeded
+            textClass='text-white bg-primary';
             logMsg=`${logMsg}`;
           } else if(logMsg.indexOf('[fferr]')===0 && logMsg.includes(':') && !logMsg.toLowerCase().includes('config')) {
-            textClass='text-primary bg-light'; // file info
+            textClass='text-primary bg-light'; 
             logMsg=`${logMsg}`;
           } else if(logMsg.indexOf('[info]')===0) {
-            textClass='text-dark'; // better than filler
+            textClass='text-dark'; 
             logMsg=`${logMsg}`;
           } else if(logMsg.indexOf('[fferr]')===0) {
-            textClass='text-secondary'; // filler logs
+            textClass='text-secondary'; 
             logMsg=`${logMsg}`;
           } else if(logMsg.indexOf('[ffout]')===0) {
-            textClass='text-white bg-success'; // impt notification. process ended.
+            textClass='text-white bg-success'; 
             logMsg=`${logMsg}`;
           } else {
             logMsg=`${logMsg}`;
@@ -74,29 +74,25 @@ if (document.readyState === "complete" || document.readyState !== "loading" && !
         }
       }
       console.logs = console.log.bind(console);
-      // console.dataLogs = [];
       console.log = function() {
           console.logs.apply(console, arguments);
           if(Array.from(arguments).length===1 && typeof (Array.from(arguments)[0])==='string') {
             appendDataLog(Array.from(arguments)[0]);
           }
-          // console.dataLogs.push(Array.from(arguments));
       };
       console.errors = console.error.bind(console);
-      // console.errLogs = [];
       console.error = function(){
           console.errors.apply(console, arguments);
           if(Array.from(arguments).length===1 && typeof Array.from(arguments)==='object') {
             appendErrorLog(Array.from(arguments)[0].path[0].error.message);
           }
-          // console.errLogs.push(Array.from(arguments)[0]);
       };
 
       const isCrossOriginIsolated=document.getElementById('isCrossOriginIsolated');
       if(crossOriginIsolated) {
-        isCrossOriginIsolated.innerHTML='🟢'; // green
+        isCrossOriginIsolated.innerHTML='🟢';
       } else {
-        isCrossOriginIsolated.innerHTML='🔴'; // red
+        isCrossOriginIsolated.innerHTML='🔴';
       }
 
       const uploadMediaBtn = document.getElementById('uploadMediaBtn');
@@ -152,12 +148,6 @@ if (document.readyState === "complete" || document.readyState !== "loading" && !
         oOption.value=fileMimeType;
         oOption.text=`${fileDescription} [${fileExt}]`;
 
-        // if(!conversionWorks) {
-        //   oOption.disabled=true;
-        //   oOption['style']['color']='#999999';
-        //   oOption['style']['background']='#f0f0f0';
-        //   oOption['style']['border']='1px solid #e1e1e1';
-        // } else
         if(!isSelected) {
           oOption.setAttribute('selected',true);
 
@@ -279,17 +269,8 @@ if (document.readyState === "complete" || document.readyState !== "loading" && !
         appendDataLog('Transcoding input file to output file.');
         await ffmpeg.run('-i', fileName, `output${outputFileExt}`);
 
-        // appendDataLog('Check if output file exists in the virtual files system.');
-        // let toContinue = true;
-        // while(toContinue) {
-        //   const fileExists = ffmpeg.FS('readdir', '/').includes(`output${outputFileExt}`);
-        //   console.log(fileExists);
-        //   if(fileExists) {
-        //     toContinue=false;
-        //   }
-        // }
         appendDataLog('Retrieving output file from virtual files system.');
-        const data = ffmpeg.FS('readFile', `output${outputFileExt}`); // Uint8Array 
+        const data = ffmpeg.FS('readFile', `output${outputFileExt}`); 
 
         let b64Str = convertBitArrtoB64(data);
         let encodedData=`data:${outputFileMimeType};base64,${b64Str}`;

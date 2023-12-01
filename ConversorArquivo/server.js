@@ -7,10 +7,8 @@ const path = require('path');
 const engine = require("consolidate");
 const compression = require('compression')
 
-// compress all responses
 app.use(compression());
 
-// middleware to enable SharedBuffer to be used
 app.use(function(req, res, next) {
   res.header("Cross-Origin-Embedder-Policy", "require-corp");
   res.header("Cross-Origin-Opener-Policy", "same-origin");

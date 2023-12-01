@@ -1,12 +1,3 @@
-/* Prevent scroll on narrow devices */
-/* html,
-body {
-  overflow-x: hidden; 
-}
-
-body {
-  padding-top: 62px;
-} */
 @media (max-width: 768px) {
     .offcanvas-collapse {
         position: fixed;
